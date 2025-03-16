@@ -91,7 +91,7 @@ def SRCNN_model():
     c2 = Convolution2D( 32 , 1 , 1 , activation = 'relu', kernel_initializer = 'he_normal', padding='same')(c1)
     c3 = Convolution2D( 1 , 5 , 5 , kernel_initializer = 'he_normal', padding='same')(c2)
     #c4 = Input(shape = input_shape)(c3)
-    model = Model(input = x, output = c3)
+    model = Model(inputs = x, outputs = c3)
     ##compile
     adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
     model.compile(optimizer=adam, loss='mean_squared_error', metrics=['mean_squared_error']) 
