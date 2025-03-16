@@ -66,16 +66,6 @@ def interpolation(noisy , SNR , Number_of_pilot , interp):
             tck = interpolate.bisplrep(np.array(r).astype(float), np.array(c).astype(float), z)
             z_intp = interpolate.bisplev(range(72),range(14),tck)
             interp_noisy[i,:,:,0] = z_intp
-        z = [noisy_image[i,j,k,1] for j,k in zip(r,c)]
-        if(interp == 'rbf'):
-            f = interpolate.Rbf(np.array(r).astype(float), np.array(c).astype(float), z,function='gaussian')
-            X , Y = np.meshgrid(range(72),range(14))
-            z_intp = f(X, Y)
-            interp_noisy[i,:,:,1] = z_intp.T
-        elif(interp == 'spline'):
-            tck = interpolate.bisplrep(np.array(r).astype(float), np.array(c).astype(float), z)
-            z_intp = interpolate.bisplev(range(72),range(14),tck)
-            interp_noisy[i,:,:,1] = z_intp
 
 
     interp_noisy = np.concatenate((interp_noisy[:,:,:,0], interp_noisy[:,:,:,1]), axis=0).reshape(80000, 72, 14, 1)
