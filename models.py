@@ -93,7 +93,7 @@ def SRCNN_model():
     #c4 = Input(shape = input_shape)(c3)
     model = Model(inputs = x, outputs = c3)
     ##compile
-    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
+    adam = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
     model.compile(optimizer=adam, loss='mean_squared_error', metrics=['mean_squared_error']) 
     return model
     
@@ -135,7 +135,7 @@ def DNCNN_model ():
     x = Conv2D(filters=1, kernel_size=(3,3), strides=(1,1), padding='same')(x)
     x = Subtract()([inpt, x])   # input - noise
     model = Model(inputs=inpt, outputs=x)
-    adam = Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
+    adam = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
     model.compile(optimizer=adam, loss='mean_squared_error', metrics=['mean_squared_error'])    
     return model
 
