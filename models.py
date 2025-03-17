@@ -108,13 +108,13 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
                     callbacks=callbacks_list, shuffle=True, epochs= 300 , verbose=0)
     
     #srcnn_model.save_weights("drive/codes/my_srcnn/SRCNN_SUI5_weights/SRCNN_48_12.h5")
-    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".h5")
+    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
    
 
 
 def SRCNN_predict(input_data , channel_model , num_pilots , SNR):
     srcnn_model = SRCNN_model()
-    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".h5")
+    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
     predicted  = srcnn_model.predict(input_data)
     return predicted
 
