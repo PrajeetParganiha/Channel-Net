@@ -131,7 +131,7 @@ def DNCNN_model ():
         x = BatchNormalization(axis=-1, epsilon=1e-3)(x)
         x = Activation('relu')(x)   
     # last layer, Conv
-    x = Conv2D(1, (3,3), padding='same', dtype='float32')(x)
+    x = Conv2D(filters=1, kernel_size=(3,3), strides=(1,1), padding='same')(x)
     x = Subtract()([inpt, x])   # input - noise
     model = Model(inputs=inpt, outputs=x)
     adam = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
