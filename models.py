@@ -108,13 +108,13 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
                     callbacks=callbacks_list, shuffle=True, epochs= 50 , verbose=0)
     
     #srcnn_model.save_weights("drive/codes/my_srcnn/SRCNN_SUI5_weights/SRCNN_48_12.h5")
-    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
    
 
 
 def SRCNN_predict(input_data , channel_model , num_pilots , SNR):
     srcnn_model = SRCNN_model()
-    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
     predicted  = srcnn_model.predict(input_data)
     return predicted
 
@@ -149,13 +149,13 @@ def DNCNN_train(train_data ,train_label, val_data , val_label, channel_model , n
 
   dncnn_model.fit(train_data, train_label, batch_size=64, validation_data=(val_data, val_label),
                   callbacks=callbacks_list, shuffle=True, epochs= 50 , verbose=0)
-  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
   
   
   
 def DNCNN_predict(input_data, channel_model , num_pilots , SNR):
   dncnn_model = DNCNN_model()
-  dncnn_model.load_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+  dncnn_model.load_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
   predicted  = dncnn_model.predict(input_data)
   return predicted
   
