@@ -100,7 +100,7 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
     srcnn_model = SRCNN_model()
     print(srcnn_model.summary())
     
-    checkpoint = ModelCheckpoint("SRCNN_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
+    checkpoint = ModelCheckpoint("SRCNN_check.keras", monitor='val_loss', verbose=1, save_best_only=True,
                                  save_weights_only=False, mode='min')
     callbacks_list = [checkpoint]
 
@@ -108,13 +108,13 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
                     callbacks=callbacks_list, shuffle=True, epochs= 50 , verbose=0)
     
     #srcnn_model.save_weights("drive/codes/my_srcnn/SRCNN_SUI5_weights/SRCNN_48_12.h5")
-    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
+    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
    
 
 
 def SRCNN_predict(input_data , channel_model , num_pilots , SNR):
     srcnn_model = SRCNN_model()
-    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
+    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
     predicted  = srcnn_model.predict(input_data)
     return predicted
 
@@ -131,7 +131,7 @@ def DNCNN_model ():
         x = BatchNormalization(axis=-1, epsilon=1e-3)(x)
         x = Activation('relu')(x)   
     # last layer, Conv
-    x = Conv2D(filters=1, kernel_size=(3,3), strides=(1,1), padding='same')(x)
+    x = Conv2D(1, (3,3), padding='same', dtype='float32')(x)
     x = Subtract()([inpt, x])   # input - noise
     model = Model(inputs=inpt, outputs=x)
     adam = Adam(learning_rate=0.001, beta_1=0.9, beta_2=0.999, epsilon=1e-8) 
@@ -143,19 +143,19 @@ def DNCNN_train(train_data ,train_label, val_data , val_label, channel_model , n
   dncnn_model = DNCNN_model()
   print(dncnn_model.summary())
 
-  checkpoint = ModelCheckpoint("DNCNN_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
+  checkpoint = ModelCheckpoint("DNCNN_check.keras", monitor='val_loss', verbose=1, save_best_only=True,
                                save_weights_only=False, mode='min')
   callbacks_list = [checkpoint]
 
   dncnn_model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
                   callbacks=callbacks_list, shuffle=True, epochs= 50, verbose=0)
-  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
+  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
   
   
   
 def DNCNN_predict(input_data, channel_model , num_pilots , SNR):
   dncnn_model = DNCNN_model()
-  dncnn_model.load_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
+  dncnn_model.load_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
   predicted  = dncnn_model.predict(input_data)
   return predicted
   
