@@ -100,7 +100,7 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
     srcnn_model = SRCNN_model()
     print(srcnn_model.summary())
     
-    checkpoint = ModelCheckpoint("SRCNN_check.keras", monitor='val_loss', verbose=1, save_best_only=True,
+    checkpoint = ModelCheckpoint("SRCNN_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
                                  save_weights_only=False, mode='min')
     callbacks_list = [checkpoint]
 
@@ -108,13 +108,13 @@ def SRCNN_train(train_data ,train_label, val_data , val_label , channel_model , 
                     callbacks=callbacks_list, shuffle=True, epochs= 1 , verbose=1)
     
     #srcnn_model.save_weights("drive/codes/my_srcnn/SRCNN_SUI5_weights/SRCNN_48_12.h5")
-    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+    srcnn_model.save_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
    
 
 
 def SRCNN_predict(input_data , channel_model , num_pilots , SNR):
     srcnn_model = SRCNN_model()
-    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+    srcnn_model.load_weights("SRCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
     predicted  = srcnn_model.predict(input_data)
     return predicted
 
@@ -143,13 +143,13 @@ def DNCNN_train(train_data ,train_label, val_data , val_label, channel_model , n
   dncnn_model = DNCNN_model()
   print(dncnn_model.summary())
 
-  checkpoint = ModelCheckpoint("DNCNN_check.keras", monitor='val_loss', verbose=1, save_best_only=True,
+  checkpoint = ModelCheckpoint("DNCNN_check.h5", monitor='val_loss', verbose=1, save_best_only=True,
                                save_weights_only=False, mode='min')
   callbacks_list = [checkpoint]
 
   dncnn_model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
                   callbacks=callbacks_list, shuffle=True, epochs= 1, verbose=1)
-  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".keras")
+  dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
   
   
   
