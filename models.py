@@ -148,7 +148,7 @@ def DNCNN_train(train_data ,train_label, val_data , val_label, channel_model , n
   callbacks_list = [checkpoint]
 
   dncnn_model.fit(train_data, train_label, batch_size=128, validation_data=(val_data, val_label),
-                  callbacks=callbacks_list, shuffle=True, epochs= 1, verbose=1)
+                  callbacks=callbacks_list, shuffle=True, epochs= 50, verbose=1)
   dncnn_model.save_weights("DNCNN_" + channel_model +"_"+ str(num_pilots) + "_"  + str(SNR) + ".weights.h5")
   
   
